@@ -10,6 +10,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from google.cloud import aiplatform
 from vertexai.generative_models import GenerativeModel, Part
 from dotenv import load_dotenv
+from twilio.rest import Client
+from twilio.twiml.voice_response import VoiceResponse, Connect, Stream
 
 load_dotenv()
 
@@ -27,6 +29,9 @@ DEEPGRAM_API_KEY = os.getenv("DEEPGRAM_API_KEY")
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 GOOGLE_CLOUD_PROJECT = os.getenv("GOOGLE_CLOUD_PROJECT")
 GOOGLE_CLOUD_REGION = os.getenv("GOOGLE_CLOUD_REGION", "us-central1")
+TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER")
 
 # Initialize Vertex AI
 if GOOGLE_CLOUD_PROJECT:
@@ -129,7 +134,52 @@ async def log_zendesk_call(record: CRMRecord):
     """Mock Zendesk API for logging a voice call interaction."""
     print(f"[Zendesk CRM] Logging call for {record.customer_id}: {record.notes}")
     return {"status": "success", "ticket_id": "ZD-12345", "message": "Call logged in mock Zendesk"}
-# ---------------------------------------
+
+# --- Phase 5: Twilio Telephony Integration ---
+@app.post("/api/twilio/incoming")
+async def twilio_incoming():
+    """Builds TwiML to connect an inbound phone call to our WebSocket."""
+    response = VoiceResponse()
+    response.say("Welcome back to the MNK Voice Agent Suite. Please say something.")
+    
+    connect = Connect()
+    connect.stream(url='wss://your-ngrok-or-cloudrun-url.com/ws/stream') 
+    response.append(connect)
+    
+    return str(response)
+
+class OutboundCallRequest(BaseModel):
+    to_phone_number: str
+
+@app.post("/api/twilio/outbound")
+async def twilio_outbound(req: OutboundCallRequest):
+    """Triggers an outbound call using the Twilio REST API."""
+    if not TWILIO_ACCOUNT_SID or not TWILIO_AUTH_TOKEN:
+        return {"error": "Missing Twilio Credentials in .env"}
+
+    client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+    
+    # We use TwiML bins or a public URL to host the instructions for the call
+    # For now, we will construct inline TwiML that connects to the Web Socket
+    twiml = f"""
+    <Response>
+        <Say>Hi, this is the MNK Voice Agent calling you.</Say>
+        <Connect>
+            <Stream url="wss://your-ngrok-or-cloudrun-url.com/ws/stream" />
+        </Connect>
+    </Response>
+    """
+    
+    try:
+        call = client.calls.create(
+            twiml=twiml,
+            to=req.to_phone_number,
+            from_=TWILIO_PHONE_NUMBER
+        )
+        return {"status": "success", "call_sid": call.sid}
+    except Exception as e:
+        return {"error": str(e)}
+# ---------------------------------------------
 
 @app.websocket("/ws/stream")
 async def websocket_endpoint(websocket: WebSocket):
