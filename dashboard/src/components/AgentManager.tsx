@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import { Settings, Play, Square, Database } from 'lucide-react';
 
