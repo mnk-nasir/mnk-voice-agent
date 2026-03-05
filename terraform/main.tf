@@ -24,30 +24,29 @@ resource "google_cloud_run_v2_service" "orchestrator" {
       ports {
         container_port = 8000
       }
-      env {
-        name  = "PORT"
-        value = "8000"
-      }
+
     }
   }
 }
 
-# AlloyDB Cluster for conversation history
-resource "google_alloydb_cluster" "default" {
-  cluster_id = "mnk-conv-history-cluster"
-  location   = var.region
-  network    = "projects/${var.project_id}/global/networks/default"
-}
-
-resource "google_alloydb_instance" "primary" {
-  cluster       = google_alloydb_cluster.default.name
-  instance_id   = "mnk-conv-history-primary"
-  instance_type = "PRIMARY"
-  
-  machine_config {
-    cpu_count = 2
-  }
-}
+# # AlloyDB Cluster for conversation history
+# resource "google_alloydb_cluster" "default" {
+#   cluster_id = "mnk-conv-history-cluster"
+#   location   = var.region
+#   network_config {
+#     network = "projects/${var.project_id}/global/networks/default"
+#   }
+# }
+# 
+# resource "google_alloydb_instance" "primary" {
+#   cluster       = google_alloydb_cluster.default.name
+#   instance_id   = "mnk-conv-history-primary"
+#   instance_type = "PRIMARY"
+#   
+#   machine_config {
+#     cpu_count = 2
+#   }
+# }
 
 # Secret Manager for API Keys
 resource "google_secret_manager_secret" "api_keys" {

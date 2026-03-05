@@ -13,7 +13,7 @@ The suite is built on a Google Cloud Serverless foundation, ensuring infinite sc
 
 *   **Ingestion**: Google Cloud Run / SIP Trunk
 *   **Transcription**: Deepgram / Whisper v3
-*   **Reasoning**: Gemini 2.0 Flash
+*   **Reasoning**: Gemini 2.0 Flash (Multimodal Live API via Google GenAI SDK)
 *   **Synthesis**: ElevenLabs / Cartesia
 *   **Monitoring**: MNK Latency Middleware (Target < 300ms V2V)
 

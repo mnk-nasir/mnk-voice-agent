@@ -1,0 +1,7 @@
+remote: error: Trace: 92372902711220526adfb4d7e89ad5b9076b6d48b8e29ebaaa2b23448ccada36        
+remote: error: See https://gh.io/lfs for more information.        
+remote: error: File terraform/.terraform/providers/registry.terraform.io/hashicorp/google/5.45.2/windows_amd64/terraform-provider-google_v5.45.2_x5.exe is 100.48 MB; this exceeds GitHub's file size limit of 100.00 MB        
+remote: error: GH001: Large files detected. You may want to try Git Large File Storage - https://git-lfs.github.com.        
+To https://github.com/mnk-nasir/mnk-voice-agent.git
+ ! [remote rejected] main -> main (pre-receive hook declined)
+error: failed to push some refs to 'https://github.com/mnk-nasir/mnk-voice-agent.git'

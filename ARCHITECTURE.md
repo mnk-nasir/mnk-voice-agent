@@ -39,7 +39,7 @@ graph TD
     %% 4. AI Ecosystem
     subgraph "AI Intelligence Layer"
         Deepgram["🗣️ Deepgram<br>(Speech-to-Text / Nova-2)"]:::ai_service
-        Gemini["🧠 Google Gemini 2.0 Flash<br>(Vertex AI SDK)"]:::ai_service
+        Gemini["🧠 Google Gemini 2.0 Flash<br>(Multimodal Live API)"]:::ai_service
         ElevenLabs["🎙️ ElevenLabs<br>(Text-to-Speech)"]:::ai_service
     end
 
@@ -93,6 +93,6 @@ graph TD
 3. **Twilio Media Streams**: Allows standard phone calls (PSTN) to bypass traditional UI paths, streaming raw 8kHz mu-law audio directly into the FastAPI websocket interface.
 4. **AI Models**:
    - **Deepgram** transcribes the raw inbound audio in real-time.
-   - **Gemini 2.0 Flash** processes the intent, reasons over the context, and generates the text reply.
+   - **Gemini 2.0 Flash (Multimodal Live API)** processes the intent natively via bidirectional WebSockets, reasons over the context, and generates the text reply.
    - **ElevenLabs** turns the text reply back into a highly emotive human voice audio stream.
 5. **GCP Backend**: Scales effortlessly to zero when not in use, natively using **Secret Manager** to securely load external API keys at runtime, and **AlloyDB** to persist interactions.

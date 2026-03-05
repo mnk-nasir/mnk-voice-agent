@@ -1,3 +1,3 @@
 # Terraform Variables
-project_id = "your-gcp-project-id"
+project_id = "genuine-episode-420910"
 region     = "us-central1"

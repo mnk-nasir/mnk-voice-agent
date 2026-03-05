@@ -7,8 +7,8 @@ import httpx
 import websockets
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
-from google.cloud import aiplatform
-from vertexai.generative_models import GenerativeModel, Part
+
+from google import genai
 from dotenv import load_dotenv
 from twilio.rest import Client
 from twilio.twiml.voice_response import VoiceResponse, Connect, Stream
@@ -33,29 +33,66 @@ TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
 TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
 TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER")
 
+from google.auth import default as get_default_credentials
+
 # Initialize Vertex AI
 if GOOGLE_CLOUD_PROJECT:
-    aiplatform.init(project=GOOGLE_CLOUD_PROJECT, location=GOOGLE_CLOUD_REGION)
-    model = GenerativeModel("gemini-2.0-flash-exp") # Utilizing Gemini 2.0 Flash
+    # Explicitly load ADC credentials for the Live API Client
+    try:
+        credentials, project_id = get_default_credentials()
+        live_client = genai.Client(
+            vertexai=True, 
+            project=GOOGLE_CLOUD_PROJECT, 
+            location=GOOGLE_CLOUD_REGION,
+            credentials=credentials
+        )
+        print("Gemini Live API Client Initialized using Explicit Credentials")
+    except Exception as e:
+        print(f"Failed to initialize explicit credentials: {e}")
+        live_client = genai.Client(vertexai=True, project=GOOGLE_CLOUD_PROJECT, location=GOOGLE_CLOUD_REGION)
 
 @app.get("/health")
 async def health_check():
     return {"status": "ok"}
 
+import logging
+import sys
+
+logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+logger = logging.getLogger(__name__)
+
 async def process_with_llm(text: str) -> str:
-    """Real intent recognition and generation with Gemini 2.0."""
+    """Real intent recognition and generation with Gemini 2.0 Multimodal Live API."""
     if not GOOGLE_CLOUD_PROJECT:
         # Fallback for local testing without GCP credentials
         return f"Echo from LLM: {text}"
     
     try:
-        response = await model.generate_content_async(
-            f"You are the MNK Voice Agent. Respond concisely and professionally to the user: {text}"
-        )
-        return response.text
+        # Utilizing the Gemini Multimodal Live API via WebSockets to meet Hackathon requirements
+        # Note: We must explicitly request TEXT modality because the Multimodal Live API defaults to native AUDIO
+        async with live_client.aio.live.connect(
+            model="gemini-2.0-flash-live-preview-04-09",
+            config={"response_modalities": ["TEXT"]}
+        ) as session:
+            await session.send(input=f"You are the MNK Voice Agent. Respond concisely and professionally to the user: {text}", end_of_turn=True)
+            
+            full_response = ""
+            async for response in session.receive():
+                # Extract text chunks as they stream in over the Live API websocket
+                server_content = getattr(response, 'server_content', None)
+                if server_content and getattr(server_content, 'model_turn', None):
+                    for part in server_content.model_turn.parts:
+                        if part.text:
+                            full_response += part.text
+                
+                # Check for the end of the Live API turn
+                if server_content and getattr(server_content, 'turn_complete', False):
+                    break
+                    
+            return full_response if full_response else "I'm sorry, I couldn't generate a response."
     except Exception as e:
-        print(f"LLM Error: {e}")
-        return "I'm sorry, I'm having trouble processing that right now."
+        logger.error(f"FATAL LLM EXCEPTION CAUGHT: {str(e)}", exc_info=True)
+        return f"CRASH: {str(e)}"
 
 async def deepgram_stt(audio_data: bytes) -> str:
     """Real Deepgram STT (Speech-to-Text)."""
@@ -198,7 +235,16 @@ async def websocket_endpoint(websocket: WebSocket):
                 print("Received audio bytes for STT")
                 transcribed_text = await deepgram_stt(audio_data)
             else:
-                transcribed_text = message.get("text", "")
+                raw_text = message.get("text", "")
+                if raw_text.startswith("{"):
+                    try:
+                        import json
+                        parsed = json.loads(raw_text)
+                        transcribed_text = parsed.get("text", raw_text)
+                    except:
+                        transcribed_text = raw_text
+                else:
+                    transcribed_text = raw_text
                 print(f"Received text input: {transcribed_text}")
                 
             if not transcribed_text:
@@ -225,6 +271,6 @@ async def websocket_endpoint(websocket: WebSocket):
             })
             
     except WebSocketDisconnect:
-        print("Client disconnected")
+        logger.info("Client disconnected")
     except Exception as e:
-        print(f"WebSocket error: {e}")
+        logger.error(f"WebSocket FATAL error: {e}", exc_info=True)

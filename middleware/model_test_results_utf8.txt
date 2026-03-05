@@ -1,0 +1,55 @@
+﻿.\venv2\Scripts\python.exe : C:\Users\Lenovo 
+X390\Documents\antigravity\Voiceagent\middleware\venv2\Lib\site-packages\google\auth\_default.py:114: 
+UserWarning: Your application has authenticated using end user credentials from Google Cloud SDK 
+without a quota project. You might receive a "quota exceeded" or "API not enabled" error. See the 
+following page for troubleshooting: 
+https://cloud.google.com/docs/authentication/adc-troubleshooting/user-creds. 
+At line:1 char:93
++ ... -central1"; .\venv2\Scripts\python.exe test_models.py > model_test_re ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\Users\Lenovo...ng/user-creds. :String) [], RemoteExcept 
+   ion
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  warnings.warn(_CLOUD_SDK_CREDENTIALS_WARNING)
+C:\Users\Lenovo 
+X390\Documents\antigravity\Voiceagent\middleware\venv2\Lib\site-packages\google\auth\_default.py:114: 
+UserWarning: Your application has authenticated using end user credentials from Google Cloud SDK 
+without a quota project. You might receive a "quota exceeded" or "API not enabled" error. See the 
+following page for troubleshooting: 
+https://cloud.google.com/docs/authentication/adc-troubleshooting/user-creds. 
+  warnings.warn(_CLOUD_SDK_CREDENTIALS_WARNING)
+C:\Users\Lenovo 
+X390\Documents\antigravity\Voiceagent\middleware\venv2\Lib\site-packages\google\auth\_default.py:114: 
+UserWarning: Your application has authenticated using end user credentials from Google Cloud SDK 
+without a quota project. You might receive a "quota exceeded" or "API not enabled" error. See the 
+following page for troubleshooting: 
+https://cloud.google.com/docs/authentication/adc-troubleshooting/user-creds. 
+  warnings.warn(_CLOUD_SDK_CREDENTIALS_WARNING)
+C:\Users\Lenovo 
+X390\Documents\antigravity\Voiceagent\middleware\venv2\Lib\site-packages\google\auth\_default.py:114: 
+UserWarning: Your application has authenticated using end user credentials from Google Cloud SDK 
+without a quota project. You might receive a "quota exceeded" or "API not enabled" error. See the 
+following page for troubleshooting: 
+https://cloud.google.com/docs/authentication/adc-troubleshooting/user-creds. 
+  warnings.warn(_CLOUD_SDK_CREDENTIALS_WARNING)
+C:\Users\Lenovo 
+X390\Documents\antigravity\Voiceagent\middleware\venv2\Lib\site-packages\google\auth\_default.py:114: 
+UserWarning: Your application has authenticated using end user credentials from Google Cloud SDK 
+without a quota project. You might receive a "quota exceeded" or "API not enabled" error. See the 
+following page for troubleshooting: 
+https://cloud.google.com/docs/authentication/adc-troubleshooting/user-creds. 
+  warnings.warn(_CLOUD_SDK_CREDENTIALS_WARNING)
+C:\Users\Lenovo 
+X390\Documents\antigravity\Voiceagent\middleware\venv2\Lib\site-packages\google\auth\_default.py:114: 
+UserWarning: Your application has authenticated using end user credentials from Google Cloud SDK 
+without a quota project. You might receive a "quota exceeded" or "API not enabled" error. See the 
+following page for troubleshooting: 
+https://cloud.google.com/docs/authentication/adc-troubleshooting/user-creds. 
+  warnings.warn(_CLOUD_SDK_CREDENTIALS_WARNING)
+FAILED: gemini-2.0-flash-exp -> 1007 None. gemini-2.0-flash-exp is not supported in the live api.
+FAILED: gemini-2.0-flash-realtime-exp -> 1008 None. Publisher Model `projects/genuine-episode-420910/locations/us-central1/publishers/google/models/gemini-2.0-flash-realtime-e
+SUCCESS: Connected to gemini-2.0-flash-live-preview-04-09
+FAILED: gemini-2.0-flash -> 1007 None. gemini-2.0-flash is not supported in the live api.
+FAILED: gemini-2.5-flash -> 1007 None. gemini-2.5-flash is not supported in the live api.
+FAILED: gemini-2.0-flash-001 -> 1007 None. gemini-2.0-flash-001 is not supported in the live api.

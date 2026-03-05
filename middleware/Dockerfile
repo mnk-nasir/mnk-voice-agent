@@ -1,0 +1,20 @@
+# Use the official Python runtime as a parent image
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy the requirements file into the container
+COPY requirements.txt .
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose default Cloud Run Port
+EXPOSE $PORT
+
+# Command to run the application using Uvicorn (must bind to $PORT injected by Cloud Run)
+CMD uvicorn app:app --host 0.0.0.0 --port $PORT
