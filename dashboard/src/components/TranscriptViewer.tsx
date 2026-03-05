@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
-import { User, Bot, AlertCircle, Send } from 'lucide-react';
+import { User, Bot, AlertCircle, Send, Activity } from 'lucide-react';
 
 export default function TranscriptViewer() {
     const [takeover, setTakeover] = useState(false);
@@ -9,9 +9,10 @@ export default function TranscriptViewer() {
     ]);
     const [input, setInput] = useState("");
     const wsRef = useRef<WebSocket | null>(null);
+    const messagesEndRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        // Connect directly to the production Cloud Run backend WebSocket
+        // Connect directly to the production Cloud Run backend WebSocket 
         const ws = new WebSocket("wss://mnk-orchestrator-148520507547.us-central1.run.app/ws/stream");
         wsRef.current = ws;
 
@@ -41,6 +42,10 @@ export default function TranscriptViewer() {
         return () => ws.close();
     }, []);
 
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages]);
+
     const sendMessage = (e?: React.FormEvent) => {
         if (e) e.preventDefault();
         if (!input.trim() || !wsRef.current) return;
@@ -57,48 +62,76 @@ export default function TranscriptViewer() {
     };
 
     return (
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col h-[500px]">
-            <div className="flex items-center justify-between mb-4 border-b pb-4 shrink-0">
-                <h2 className="text-xl font-semibold text-gray-800">Live Agent Console</h2>
+        <div className="glass-panel p-6 rounded-2xl flex flex-col h-[600px] lg:h-full relative overflow-hidden">
+            {/* Subtle background glow for the chat panel */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
+
+            <div className="flex items-center justify-between mb-4 border-b border-slate-700/50 pb-4 shrink-0 relative z-10">
+                <div className="flex items-center gap-3">
+                    <div className="p-2 bg-gradient-to-br from-indigo-500/20 to-sky-500/20 rounded-lg">
+                        <Activity className="w-5 h-5 text-sky-400" />
+                    </div>
+                    <div>
+                        <h2 className="text-xl font-semibold text-slate-100">Live Console</h2>
+                        <p className="text-xs text-slate-400">Monitoring real-time interactions</p>
+                    </div>
+                </div>
+
                 <button
                     onClick={handleTakeover}
                     disabled={takeover}
-                    className={`px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-2 transition ${takeover ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-red-50 text-red-600 hover:bg-red-100 border border-red-200'}`}
+                    className={`px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-2 transition-all shadow-lg ${takeover
+                            ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700/50 shadow-none'
+                            : 'bg-gradient-to-r from-rose-500 hover:from-rose-600 to-rose-600 hover:to-rose-700 text-white shadow-rose-500/20 border border-rose-500/20'
+                        }`}
                 >
                     <AlertCircle className="w-4 h-4" />
                     {takeover ? 'Human In Control' : 'Human Take-over'}
                 </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto space-y-4 pr-2 mb-4">
+            <div className="flex-1 overflow-y-auto space-y-4 pr-2 mb-4 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent relative z-10">
                 {messages.map((msg, i) => (
-                    <div key={i} className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${msg.role === 'user' ? 'bg-gray-200' : 'bg-blue-100'}`}>
-                            {msg.role === 'user' ? <User className="w-4 h-4 text-gray-600" /> : <Bot className="w-4 h-4 text-blue-600" />}
+                    <div key={i} className={`flex gap-3 animate-in fade-in slide-in-from-bottom-2 duration-300 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-lg ${msg.role === 'user'
+                                ? 'bg-gradient-to-br from-indigo-500 to-purple-600 shadow-indigo-500/20'
+                                : 'bg-gradient-to-br from-slate-700 to-slate-800 shadow-slate-900/50 border border-slate-600'
+                            }`}>
+                            {msg.role === 'user' ? <User className="w-4 h-4 text-white" /> : <Bot className="w-4 h-4 text-slate-300" />}
                         </div>
-                        <div className={`${msg.role === 'user' ? 'bg-blue-600 text-white rounded-tr-none' : 'bg-gray-50 text-gray-800 rounded-tl-none'} p-3 rounded-lg text-sm max-w-[80%] whitespace-pre-wrap`}>
+                        <div className={`
+                            ${msg.role === 'user'
+                                ? 'bg-gradient-to-br from-indigo-600 to-purple-600 text-white rounded-2xl rounded-tr-sm shadow-lg shadow-indigo-500/10 border border-indigo-500/20'
+                                : 'bg-slate-800/80 text-slate-200 rounded-2xl rounded-tl-sm border border-slate-700/50 shadow-xl shadow-black/20'
+                            } p-4 text-sm max-w-[80%] whitespace-pre-wrap leading-relaxed`}
+                        >
                             {msg.text}
-                            {msg.ttfb && <div className="text-xs text-gray-400 mt-1">TTFB: {msg.ttfb}ms</div>}
+                            {msg.ttfb && (
+                                <div className="text-[10px] text-sky-400 mt-2 font-mono bg-sky-950/30 inline-block px-2 py-1 rounded border border-sky-500/20">
+                                    ⚡ {msg.ttfb}ms
+                                </div>
+                            )}
                         </div>
                     </div>
                 ))}
+                <div ref={messagesEndRef} />
             </div>
 
-            <form onSubmit={sendMessage} className="flex gap-2 shrink-0">
+            <form onSubmit={sendMessage} className="flex gap-2 shrink-0 relative z-10 pt-2">
                 <input
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder={takeover ? "Human Operator Chat disabled" : "Type to chat with the live Agent..."}
+                    placeholder={takeover ? "Operator mode active. AI routing disabled." : "Type a message to simulate user input..."}
                     disabled={takeover}
-                    className="flex-1 border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+                    className="flex-1 bg-slate-900/50 border border-slate-700/50 rounded-xl px-4 py-3 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all disabled:opacity-50"
                 />
                 <button
                     type="submit"
                     disabled={takeover || !input.trim()}
-                    className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg transition shrink-0 disabled:bg-blue-300"
+                    className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white p-3 rounded-xl transition-all shadow-lg shadow-indigo-500/20 disabled:opacity-50 disabled:cursor-not-allowed group"
                 >
-                    <Send className="w-5 h-5" />
+                    <Send className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 </button>
             </form>
         </div>
