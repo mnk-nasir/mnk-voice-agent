@@ -1,0 +1,84 @@
+2026-03-04 23:02:07 INFO:     Finished server process [1]
+2026-03-04 23:06:27 INFO:     connection closed
+2026-03-04 23:21:32 INFO:     Shutting down
+2026-03-04 23:21:32 INFO:     Waiting for application shutdown.
+2026-03-04 23:21:32 INFO:     Application shutdown complete.
+2026-03-04 23:21:32 INFO:     Finished server process [1]
+2026-03-04 23:24:16 GET 101 https://mnk-orchestrator-148520507547.us-central1.run.app/ws/stream
+2026-03-04 23:24:27 GET 101 https://mnk-orchestrator-148520507547.us-central1.run.app/ws/stream
+2026-03-04 23:24:32 GET 101 https://mnk-orchestrator-148520507547.us-central1.run.app/ws/stream
+2026-03-04 23:24:37 INFO:     Started server process [1]
+2026-03-04 23:24:37 INFO:     Waiting for application startup.
+2026-03-04 23:24:37 INFO:     Application startup complete.
+2026-03-04 23:24:37 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-03-04 23:24:37 INFO:     ('169.254.169.126', 51432) - "WebSocket /ws/stream" [accepted]
+2026-03-04 23:24:37 INFO:     connection open
+2026-03-04 23:24:37 INFO:     connection closed
+2026-03-04 23:24:37 INFO:     ('169.254.169.126', 51448) - "WebSocket /ws/stream" [accepted]
+2026-03-04 23:24:37 INFO:     connection open
+2026-03-04 23:24:37 INFO:     ('169.254.169.126', 51456) - "WebSocket /ws/stream" [accepted]
+2026-03-04 23:24:37 INFO:     connection open
+2026-03-04 23:24:37 INFO:     connection closed
+2026-03-04 23:29:38 INFO:     connection closed
+2026-03-04 23:35:19 INFO:     Started server process [1]
+2026-03-04 23:35:19 INFO:     Waiting for application startup.
+2026-03-04 23:35:19 INFO:     Application startup complete.
+2026-03-04 23:35:19 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-03-04 23:35:57 GET 101 https://mnk-orchestrator-148520507547.us-central1.run.app/ws/stream
+2026-03-04 23:35:57 INFO:     ('169.254.169.126', 46808) - "WebSocket /ws/stream" [accepted]
+2026-03-04 23:35:57 INFO:     connection open
+2026-03-04 23:36:45 INFO:     connection closed
+2026-03-04 23:36:46 GET 101 https://mnk-orchestrator-148520507547.us-central1.run.app/ws/stream
+2026-03-04 23:36:46 INFO:     ('169.254.169.126', 38508) - "WebSocket /ws/stream" [accepted]
+2026-03-04 23:36:46 INFO:     connection open
+2026-03-04 23:37:03 INFO:     Shutting down
+2026-03-04 23:37:03 INFO:     Waiting for application shutdown.
+2026-03-04 23:37:03 INFO:     Application shutdown complete.
+2026-03-04 23:37:03 INFO:     Finished server process [1]
+2026-03-04 23:40:53 INFO:     connection closed
+2026-03-04 23:40:53 GET 101 https://mnk-orchestrator-148520507547.us-central1.run.app/ws/stream
+2026-03-04 23:40:54 INFO:     ('169.254.169.126', 5214) - "WebSocket /ws/stream" [accepted]
+2026-03-04 23:40:54 INFO:     connection open
+2026-03-04 23:43:26 GET 101 https://mnk-orchestrator-148520507547.us-central1.run.app/ws/stream
+2026-03-04 23:43:26 INFO:     ('169.254.169.126', 53856) - "WebSocket /ws/stream" [accepted]
+2026-03-04 23:43:26 INFO:     connection open
+2026-03-04 23:44:28 INFO:     connection closed
+2026-03-04 23:44:28 GET 101 https://mnk-orchestrator-148520507547.us-central1.run.app/ws/stream
+2026-03-04 23:44:28 INFO:     ('169.254.169.126', 24708) - "WebSocket /ws/stream" [accepted]
+2026-03-04 23:44:28 INFO:     connection open
+2026-03-04 23:45:55 INFO:     connection closed
+2026-03-04 23:49:29 INFO:     connection closed
+2026-03-04 23:49:52 GET 101 https://mnk-orchestrator-148520507547.us-central1.run.app/ws/stream
+2026-03-04 23:49:52 INFO:     ('169.254.169.126', 57514) - "WebSocket /ws/stream" [accepted]
+2026-03-04 23:49:52 INFO:     connection open
+2026-03-04 23:49:52 INFO:     connection closed
+2026-03-05 00:05:01 INFO:     Shutting down
+2026-03-05 00:05:01 INFO:     Waiting for application shutdown.
+2026-03-05 00:05:01 INFO:     Application shutdown complete.
+2026-03-05 00:05:01 INFO:     Finished server process [1]
+2026-03-05 20:59:26 GET 101 https://mnk-orchestrator-148520507547.us-central1.run.app/ws/stream
+2026-03-05 20:59:44 INFO:     Started server process [1]
+2026-03-05 20:59:44 INFO:     Waiting for application startup.
+2026-03-05 20:59:44 INFO:     Application startup complete.
+2026-03-05 20:59:44 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-03-05 20:59:44 INFO:     ('169.254.169.126', 47114) - "WebSocket /ws/stream" [accepted]
+2026-03-05 20:59:44 INFO:     connection open
+2026-03-05 21:04:45 INFO:     connection closed
+2026-03-05 21:18:55 GET 101 https://mnk-orchestrator-148520507547.us-central1.run.app/ws/stream
+2026-03-05 21:18:55 INFO:     ('169.254.169.126', 64286) - "WebSocket /ws/stream" [accepted]
+2026-03-05 21:18:55 INFO:     connection open
+2026-03-05 21:23:23 INFO:     connection closed
+2026-03-05 21:38:33 INFO:     Shutting down
+2026-03-05 21:38:33 INFO:     Waiting for application shutdown.
+2026-03-05 21:38:33 INFO:     Application shutdown complete.
+2026-03-05 21:38:33 INFO:     Finished server process [1]
+2026-03-05 21:46:53 INFO:     Started server process [1]
+2026-03-05 21:46:53 INFO:     Waiting for application startup.
+2026-03-05 21:46:53 INFO:     Application startup complete.
+2026-03-05 21:46:53 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-03-05 21:55:34 GET 101 https://mnk-orchestrator-148520507547.us-central1.run.app/ws/stream
+2026-03-05 21:55:34 INFO:     ('169.254.169.126', 22026) - "WebSocket /ws/stream" [accepted]
+2026-03-05 21:55:34 INFO:     connection open
+2026-03-05 21:55:35 INFO:     connection closed
+2026-03-05 21:58:53 INFO:     ('169.254.169.126', 33806) - "WebSocket /ws/stream" [accepted]
+2026-03-05 21:58:53 INFO:     connection open
