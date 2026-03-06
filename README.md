@@ -6,7 +6,8 @@ Unifying High-Speed Conversational AI with Enterprise-Grade Automation.
 
 ## Overview
 MNK Voice Agent is an end-to-end AI platform designed to automate high-volume customer interactions across voice and digital channels. By combining proprietary orchestration with the Gemini 2.0 Flash ecosystem, MNK allows enterprises to resolve up to 80% of common queries autonomously while maintaining a human-like, low-latency experience.
-<img width="1680" height="971" alt="image" src="https://github.com/user-attachments/assets/f9eed1b9-466d-46e7-b287-880a08555526" />
+<img<img width="1165" height="943" alt="image" src="https://github.com/user-attachments/assets/90feed76-50d0-4553-b192-ac104aba89ec" />
+ width="1680" height="971" alt="image" src="https://github.com/user-attachments/assets/f9eed1b9-466d-46e7-b287-880a08555526" />
 
 ## Technical Architecture
 The suite is built on a Google Cloud Serverless foundation, ensuring infinite scalability and "Scale-to-Zero" cost efficiency.
