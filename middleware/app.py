@@ -78,7 +78,7 @@ async def process_with_llm(text: str) -> str:
             
             full_response = ""
             async for response in session.receive():
-                # Extract text chunks as they stream in over the Live API websocket
+                logger.info(f"RAW GEMINI CHUNK: {response}")
                 server_content = getattr(response, 'server_content', None)
                 if server_content and getattr(server_content, 'model_turn', None):
                     for part in server_content.model_turn.parts:
@@ -89,7 +89,7 @@ async def process_with_llm(text: str) -> str:
                 if server_content and getattr(server_content, 'turn_complete', False):
                     break
                     
-            return full_response if full_response else "I'm sorry, I couldn't generate a response."
+            return full_response if full_response else "DEBUG: EMPTY Gemini response!"
     except Exception as e:
         logger.error(f"FATAL LLM EXCEPTION CAUGHT: {str(e)}", exc_info=True)
         return f"CRASH: {str(e)}"
